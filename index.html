@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="theme-color" content="#11152c">
+  <title>Aurora — MMORPG</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/socket.io/socket.io.js"></script>
+  <script type="importmap">
+    {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js"}}
+  </script>
+</head>
+<body>
+  <div id="loading" class="screen">
+    <div class="loading-mark">✦</div>
+    <h1>AURORA</h1><p>El mundo despierta...</p>
+    <div class="progress"><span id="progressFill"></span></div>
+    <small id="loadingText">Preparando el portal · 0%</small>
+  </div>
+
+  <main id="authScreen" class="screen hidden">
+    <section class="auth-card">
+      <div class="brand">✦ AURORA ✦</div>
+      <p class="eyebrow">CRÓNICAS DEL REINO CELESTE</p>
+      <h1 id="authTitle">Bienvenido, viajero</h1>
+      <p class="muted">Tu aventura comienza más allá del horizonte.</p>
+      <form id="authForm">
+        <label id="nameWrap" class="hidden">Nombre de aventurero<input id="characterName" maxlength="18" placeholder="Ej. Akira"></label>
+        <label>Correo electrónico<input id="email" type="email" autocomplete="email" required placeholder="tu@correo.com"></label>
+        <label>Contraseña<input id="password" type="password" minlength="8" autocomplete="current-password" required placeholder="Mínimo 8 caracteres"></label>
+        <button class="primary" id="authSubmit">Entrar al reino</button>
+      </form>
+      <p id="authError" class="error" role="status"></p>
+      <button id="toggleAuth" class="link-button">¿No tienes cuenta? Crear cuenta</button>
+      <p class="tiny">Prototipo inicial · No uses una contraseña que ya utilices en otros servicios.</p>
+    </section>
+  </main>
+
+  <main id="characterScreen" class="screen hidden">
+    <section class="character-card">
+      <p class="eyebrow">ELIGE TU DESTINO</p><h1>Escoge tu héroe</h1>
+      <div class="class-grid">
+        <button class="class-choice selected" data-class="Guerrero"><span>⚔️</span><b>Guerrero</b><small>Fuerza y defensa</small></button>
+        <button class="class-choice" data-class="Maga"><span>🔮</span><b>Maga</b><small>Magia y energía</small></button>
+        <button class="class-choice" data-class="Arquero"><span>🏹</span><b>Arquero</b><small>Precisión y agilidad</small></button>
+      </div>
+      <label>Nombre del personaje<input id="heroName" maxlength="18" placeholder="Nombre de héroe"></label>
+      <button id="enterWorld" class="primary">Entrar al mundo</button>
+      <button id="logout" class="link-button">Cerrar sesión</button>
+    </section>
+  </main>
+
+  <main id="gameScreen" class="hidden">
+    <div id="gameCanvas"></div>
+    <header class="hud">
+      <div><b id="worldName">Valle de Aurora</b><small id="playerLabel">Aventurero</small></div>
+      <div class="online">● <span id="onlineCount">1</span>/200 conectados</div>
+      <button id="exitWorld" class="small-button">Salir</button>
+    </header>
+    <div class="hint">WASD / flechas · Shift para correr · Arrastra en móvil para mirar</div>
+    <div class="mobile-controls">
+      <button data-move="forward">▲</button>
+      <div><button data-move="left">◀</button><button data-move="back">▼</button><button data-move="right">▶</button><button data-move="run" class="run-button">⚡ Correr</button></div>
+    </div>
+    <section class="chat-panel">
+      <div id="chatLog" aria-live="polite"></div>
+      <form id="chatForm"><input id="chatInput" maxlength="160" placeholder="Escribe al mundo..."><button>Enviar</button></form>
+    </section>
+  </main>
+  <script type="module" src="/game.js"></script>
+</body>
+</html>
